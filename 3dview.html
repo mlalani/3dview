@@ -1,57 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <title>BabylonJs - Basic glTF loading Example</title>
-  <script src="https://cdn.babylonjs.com/babylon.max.js"></script>
-  <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
-  <style>
-    body { margin: 0; }
-    canvas { width: 100%; height: 100%; touch-action: none; }
-  </style>
+    <meta charset="utf-8">
+    <title>BabylonJs - Basic glTF loading Example</title>
+    <script src="https://cdn.babylonjs.com/babylon.max.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <!-- <script src="babylon.max.js"></script>
+    <script src="babylonjsLoadersMin.js"></script> -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+    </style>
 </head>
+
 <body>
-  <canvas id="renderCanvas"></canvas>
-  <script type="text/javascript">
-    // create the canvas
-    var canvas = document.getElementById("renderCanvas");
+    <img src="thumb.png" style="width:400px" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <!-- Button trigger modal -->
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button> -->
 
-    // create the engine
-    var engine = new BABYLON.Engine(canvas, true);
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="max-width:900px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <canvas id="renderCanvas"></canvas>
 
-    // create the scene
-    var scene = new BABYLON.Scene(engine);
-    scene.clearColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+                </div>
+            </div>
+        </div>
+    </div>
 
-    // create the camera
-    var camera = new BABYLON.ArcRotateCamera("camera1", 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
-    camera.setPosition(new BABYLON.Vector3(0, 0, 5));
-    camera.attachControl(canvas, true);
+    <!-- <canvas id="renderCanvas"></canvas> -->
+    <script type="text/javascript">
+        var canvas = document.getElementById("renderCanvas");
 
-    // create lights
-    var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 0.5, 0), scene);
-    light.intensity = 0.8;
+        var engine = new BABYLON.Engine(canvas, true);
 
-    // create a default skybox with an environment.
-    var hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("https://playground.babylonjs.com/textures/environment.dds", scene);
-    var currentSkybox = scene.createDefaultSkybox(hdrTexture, true);
+        var scene = new BABYLON.Scene(engine);
+        scene.clearColor = new BABYLON.Color4(1, 1, 1, 1); // Set background color to white
 
-    // specify the file path to your GLB model
-    const modelFilePath = "DamagedHelmet.glb";
+        var camera = new BABYLON.ArcRotateCamera("camera1", 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
+        camera.setPosition(new BABYLON.Vector3(0, 0, 5));
+        camera.attachControl(canvas, true);
 
-    // load the GLB model
-    BABYLON.SceneLoader.Append("", modelFilePath, scene, function (scene) {
-      // do something with the scene
-    });
+        var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 0.5, 0), scene);
+        light.intensity = 0.8;
 
-    engine.runRenderLoop(function () {
-      scene.render();
-    });
+        var hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("https://playground.babylonjs.com/textures/environment.dds", scene);
+        // var currentSkybox = scene.createDefaultSkybox(hdrTexture, true);
 
-    // Watch for browser/canvas resize events
-    window.addEventListener("resize", function () {
-      engine.resize();
-    });
-  </script>
+        let modelFilePath = "HC_Heat Pump_MEPcontent_Mitsubishi Electric Corporation_Ecodan_ERSE-MED_INT-EN.glb";
+        modelFilePath = "M_Pump_Booster_MEPcontent_Priva_Vialux M-line_M2 Left Out_INT-EN.glb";
+        BABYLON.SceneLoader.Append("", modelFilePath, scene, function (scene) {
+            // do something with the scene
+        });
+
+        engine.runRenderLoop(function () {
+            scene.render();
+        });
+
+        window.addEventListener("resize", function () {
+            engine.resize();
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
